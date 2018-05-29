@@ -19,10 +19,12 @@ Implement the game with a Test-Driven Approach. With the roll of the dice, users
 * Turn/Phase State System
 * Basic Player Movement
 * Taxes, Income, and Simplified Jail
+
 ### Iteration 2
 * Allow Buying Properties
 * Implementing Selected Community Chest and Chance Cards
 * Jail Implementation
+
 ### Optional
 * Selecting Game Boards (with its own Chest and Chance sets)
 * Allow Mortgages
