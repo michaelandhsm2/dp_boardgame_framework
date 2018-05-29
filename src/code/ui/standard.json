@@ -1,0 +1,247 @@
+{
+  "blocks":[
+    {
+      "pos_x": 10,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Corner"
+    },{
+      "pos_x": 9,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 8,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Chest"
+    },{
+      "pos_x": 7,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 6,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Tax"
+    },{
+      "pos_x": 5,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Railroad"
+    },{
+      "pos_x": 4,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 3,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Chance"
+    },{
+      "pos_x": 2,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 1,
+      "pos_y": 10,
+      "rotate": 0,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 10,
+      "type": "Corner"
+    },{
+      "pos_x": 0,
+      "pos_y": 9,
+      "rotate": 90,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 8,
+      "rotate": 90,
+      "type": "Utilities"
+    },{
+      "pos_x": 0,
+      "pos_y": 7,
+      "rotate": 90,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 6,
+      "rotate": 90,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 5,
+      "rotate": 90,
+      "type": "Railroad"
+    },{
+      "pos_x": 0,
+      "pos_y": 4,
+      "rotate": 90,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 3,
+      "rotate": 90,
+      "type": "Chest"
+    },{
+      "pos_x": 0,
+      "pos_y": 2,
+      "rotate": 90,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 1,
+      "rotate": 90,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 0,
+      "pos_y": 0,
+      "type": "Corner"
+    },{
+      "pos_x": 1,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 2,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Chance"
+    },{
+      "pos_x": 3,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 4,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 5,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Railroad"
+    },{
+      "pos_x": 6,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 7,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 8,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Utilities"
+    },{
+      "pos_x": 9,
+      "pos_y": 0,
+      "rotate": 180,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 10,
+      "pos_y": 0,
+      "type": "Corner"
+    },{
+      "pos_x": 10,
+      "pos_y": 1,
+      "rotate": 270,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 10,
+      "pos_y": 2,
+      "rotate": 270,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 10,
+      "pos_y": 3,
+      "rotate": 270,
+      "type": "Chest"
+    },{
+      "pos_x": 10,
+      "pos_y": 4,
+      "rotate": 270,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 10,
+      "pos_y": 5,
+      "rotate": 270,
+      "type": "Railroad"
+    },{
+      "pos_x": 10,
+      "pos_y": 6,
+      "rotate": 270,
+      "type": "Chance"
+    },{
+      "pos_x": 10,
+      "pos_y": 7,
+      "rotate": 270,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    },{
+      "pos_x": 10,
+      "pos_y": 8,
+      "rotate": 270,
+      "type": "Tax"
+    },{
+      "pos_x": 10,
+      "pos_y": 9,
+      "rotate": 270,
+      "type": "Street",
+      "name":"Esther",
+      "zone":1
+    }
+  ]
+
+}
