@@ -8,13 +8,24 @@ class ReactUI extends React.Component {
 
     this.board = Object.create(Board);
     this.board.init();
+    this.state = {date: new Date()};
   }
 
   componentDidMount() {
-    const canvas = this.refs.canvas;
-    const ctx = this.refs.canvas.getContext('2d');
-    Canvas.clear(ctx, canvas);
-    this.board.onDraw(ctx);
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
   }
 
   componentDidUpdate() {

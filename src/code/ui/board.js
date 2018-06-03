@@ -11,7 +11,6 @@ var Board = {
     for(let i in standard.blocks){
       let block = BlockBuilder.build.call(this, standard.blocks[i]);
       block.init();
-      console.log(block)
       this.itemOnCanvas.push(block);
     }
   },

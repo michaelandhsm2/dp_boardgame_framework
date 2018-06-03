@@ -1,15 +1,12 @@
 import { Client } from 'boardgame.io/react';
-import { Game } from 'boardgame.io/core';
 
 import UI from './ui/reactUI';
-
-const _Game = Game({
-  setup: () => ({}),
-});
+import Game from './rule/game';
 
 const App = Client({
-  game: _Game,
+  game: Game,
   board: UI,
+  numPlayers: 1,
 });
 
 export default App;
