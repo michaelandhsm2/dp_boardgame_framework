@@ -1,4 +1,4 @@
-import Game from '../../code/rule/game';
+import Game from '../src/rule/game';
 
 var G;
 describe('Initial Game Setup', () => {
