@@ -5,17 +5,18 @@
   "main": "webpack.config.js",
   "dependencies": {
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
     "babel-jest": "^23.0.1",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
     "regenerator-runtime": "^0.11.1",
     "webpack": "^4.10.2",
     "webpack-cli": "^3.0.1",
-    "webpack-dev-server": "^3.1.4",
-    "babel-preset-env": "^1.7.0"
+    "webpack-dev-server": "^3.1.4"
   },
   "devDependencies": {},
   "scripts": {
@@ -28,6 +29,11 @@
     "presets": [
       "env"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
+    }
   },
   "author": "",
   "license": "ISC"
