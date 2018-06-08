@@ -1,32 +1,40 @@
-import Board from './ui/board';
-import Canvas from './ui/canvas';
-import Game from './rule/game';
+import {Framework} from './framework/index';
+import Board from './framework/board';
+import Game from './framework/game';
 
-var board, game;
+var TicTacToeBoard = Board({
+  onSetup: () => {},
+  onUpdate: () => {},
+  onDraw: () => {},
+});
 
-(function onCreate(){
+var TicTacToeGame = Game({
 
-  const canvas = document.createElement('canvas');
-  canvas.id = "canvas";
-  canvas.width = 1000;
-  canvas.height = 1000;
-  document.getElementsByTagName("body")[0].appendChild(canvas);
+  name: 'tic-tac-toe',
 
-  game = Object.create(Game);
-  game.setup({
-    numPlayers: 2
-  });
+  setup: (numPlayers) => {
+    const G = {};
+    return G;
+  },
 
-  board = Object.create(Board);
-  board.init(game);
+  moves: {
+    'moveWithoutArgs': (G, ctx) => {
+      return Object.assign({}, G);
+    },
+    'moveWithArgs': (G, ctx, arg0, arg1) => {
+      return Object.assign({}, G);
+    }
+  },
 
-  requestAnimationFrame(onDraw);
-})();
+  flow: {
+    endGameIf: (G, ctx) => { },
+    endTurnIf: (G, ctx) => { },
+  },
 
-function onDraw() {
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext('2d');
-  Canvas.clear(ctx, canvas);
-  board.onDraw(ctx);
-  requestAnimationFrame(onDraw);
-}
+})
+
+
+Framework({
+  board: TicTacToeBoard,
+  game: TicTacToeGame
+});
