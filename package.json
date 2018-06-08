@@ -22,7 +22,7 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode=development",
     "build": "webpack --mode=production",
-    "test": "jest --watch",
+    "test": "jest --watch --onlyChanged",
     "coverage": "jest --coverage --collectCoverageFrom=src/**.js"
   },
   "babel": {

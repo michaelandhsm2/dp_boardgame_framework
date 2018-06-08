@@ -7,7 +7,16 @@ var Reducer = {
     this.G = this._game.setup();
     this.ctx = {
       numPlayers,
-      moves:{}
+      moves: {},
+      events: {
+        endTurn: function(){
+          this.ctx.currentPlayer += 1;
+          if(this.ctx.currentPlayer >= numPlayers){
+            this.ctx.currentPlayer = 0;
+          }
+        },
+      },
+      currentPlayer: 0,
     };
 
     for(let i in this._game.moves){
@@ -17,11 +26,9 @@ var Reducer = {
         this._board.onDraw();
       }
     }
+
     return(this);
   },
-  run: function(){
-    this._board.test.bind(this)();
-  }
 }
 
 function Framework(obj){
