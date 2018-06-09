@@ -38,6 +38,14 @@ describe('Framework', () => {
           return{...G, num}
         }
       },
+
+      flow: {
+        endGameIf: (G, ctx) => {
+          if(G.num > 2){
+            return {gameover: true};
+          }
+        },
+      },
     });
 
     result = reducer.start({
@@ -72,6 +80,23 @@ describe('Framework', () => {
     expect(result.ctx.currentPlayer).toEqual(2);
     reducer._board.switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(0);
+    reducer._board.switch.call(reducer);
+    expect(result.ctx.currentPlayer).toEqual(1);
+    reducer._board.switch.call(reducer);
+    expect(result.ctx.currentPlayer).toEqual(2);
+    reducer._board.switch.call(reducer);
+    expect(result.ctx.currentPlayer).toEqual(0);
+  });
+
+  test('Basic Flow', ()=>{
+
+    reducer._board.test.call(reducer);
+    expect(result.G.num).toEqual(2);
+    expect(result.ctx.gameover).toEqual(undefined);
+
+    reducer._board.test.call(reducer);
+    expect(result.G.num).toEqual(3);
+    expect(result.ctx.gameover).toEqual({gameover: true});
   });
 
 });

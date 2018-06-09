@@ -12,7 +12,7 @@ var Reducer = {
         endTurn: function(){
           this.ctx.currentPlayer += 1;
           if(this.ctx.currentPlayer >= numPlayers){
-            this.ctx.currentPlayer = 0;
+            this.ctx.currentPlayer -= numPlayers;
           }
         },
       },
@@ -22,6 +22,12 @@ var Reducer = {
     for(let i in this._game.moves){
       this.ctx.moves[this._game.moves[i].name] = function(...args){
         this.G = this._game.moves[i](this.G, this.ctx, ...args);
+
+        let gameover = this._game.flow.endGameIf(this.G, this.ctx);
+        if(gameover !== undefined){
+          this.ctx.gameover = gameover;
+        }
+
         this._board.onUpdate();
         this._board.onDraw();
       }
