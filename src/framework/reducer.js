@@ -1,7 +1,7 @@
 var Reducer = {
   start:function({board, game, numPlayers}){
     this._board = board;
-    this._board.onSetup();
+    this._board.onSetup.call(this);
 
     this._game = game;
     this.G = this._game.setup();
@@ -28,11 +28,13 @@ var Reducer = {
           this.ctx.gameover = gameover;
         }
 
-        this._board.onUpdate();
-        this._board.onDraw();
+        this._board.onUpdate.call(this);
+        this._board.onDraw.call(this);
       }
     }
 
+    this._board.onUpdate.call(this);
+    this._board.onDraw.call(this);
     return(this);
   },
 }

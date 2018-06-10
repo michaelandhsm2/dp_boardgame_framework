@@ -7,6 +7,7 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^1.1.11",
@@ -26,9 +27,8 @@
     "coverage": "jest --coverage --collectCoverageFrom=src/**.js"
   },
   "babel": {
-    "presets": [
-      "env"
-    ]
+    "presets": ["env"],
+    "plugins": ["syntax-object-rest-spread"]
   },
   "jest": {
     "moduleNameMapper": {
