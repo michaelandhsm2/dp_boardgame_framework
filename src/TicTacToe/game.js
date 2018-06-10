@@ -21,6 +21,9 @@ var TicTacToeGame = Game({
       if(isVictory(G)){
         return({winner: ctx.currentPlayer});
       }
+      if(isDraw(G)){
+        return({draw: true});
+      }
     },
   },
 
@@ -38,6 +41,14 @@ function isVictory(G){
   }
 
   return false;
+}
+
+function isDraw(G){
+  for(let i = 0; i < 9; i++){
+    if(G.cells[i] === null)
+      return false;
+  }
+  return true;
 }
 
 export default TicTacToeGame;

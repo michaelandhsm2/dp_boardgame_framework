@@ -47,13 +47,20 @@ var TicTacToeBoard = Board({
       for(let j = 0; j < 3; j++){
         this.cvs.strokeRect(10 + i * UNIT_WIDTH, 10 + j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
         if(this.G.cells[i + j * 3] !== null){
-          this.cvs.fillText(this.G.cells[i + j * 3 ], 10 + i * UNIT_WIDTH + 10, 10 + (j+1) * UNIT_WIDTH - 5, UNIT_WIDTH);
+          let text = 'O';
+          if(this.G.cells[i + j * 3 ] !== 0){
+            text = 'X';
+          }
+          this.cvs.fillText(text, 10 + i * UNIT_WIDTH + 5, 10 + (j+1) * UNIT_WIDTH - 5, UNIT_WIDTH);
         }
       }
     }
     if(this.ctx.gameover){
-      console.log("Winner: " + this.ctx.gameover.winner);
-      this.para.innerHTML = "Winner: " + this.ctx.gameover.winner;
+      if(this.ctx.gameover.draw){
+        this.para.innerHTML = "Draw!";
+      }else{
+        this.para.innerHTML = "Winner: " + this.ctx.gameover.winner;
+      }
     }
   },
 });

@@ -61,4 +61,34 @@ describe('Tic Tac Toe Game', () => {
     expect(reducer.ctx.gameover).toEqual({winner: 0});
   });
 
+  test('Basic Victory', () => {
+
+    reducer.start({
+      game: TicTacToeGame,
+      board,
+      numPlayers: 2,
+    });
+
+    reducer.ctx.moves.select.call(reducer, 4);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 1);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 0);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 8);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 2);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 6);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 3);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 5);
+    reducer.ctx.events.endTurn.call(reducer);
+    reducer.ctx.moves.select.call(reducer, 7);
+    reducer.ctx.events.endTurn.call(reducer);
+
+    expect(reducer.ctx.gameover).toEqual({draw:true});
+  });
+
 });
