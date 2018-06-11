@@ -2,7 +2,7 @@ import {Reducer} from '../src/framework/reducer';
 import Board from '../src/framework/board';
 import Game from '../src/framework/game';
 
-describe('Framework', () => {
+describe('Basic Framework', () => {
 
   let reducer, game, board, result;
 
@@ -10,12 +10,6 @@ describe('Framework', () => {
     reducer = Object.create(Reducer);
 
     board = Board({
-      onSetup: function(){
-      },
-      onUpdate: function(){
-      },
-      onDraw: function(){
-      },
       test: function(){
         this.ctx.moves.count.call(this);
       },
@@ -66,7 +60,7 @@ describe('Framework', () => {
     expect(spyOnDraw.mock.calls.length).toEqual(0);
     expect(spyOnUpdate.mock.calls.length).toEqual(0);
 
-    reducer._board.test.call(reducer);
+    reducer._board[0].test.call(reducer);
     expect(result.G.num).toEqual(1);
     expect(spyOnDraw.mock.calls.length).toEqual(1);
     expect(spyOnUpdate.mock.calls.length).toEqual(1);
@@ -74,29 +68,61 @@ describe('Framework', () => {
 
   test('Basic Turns', () => {
     expect(result.ctx.currentPlayer).toEqual(0);
-    reducer._board.switch.call(reducer);
+    reducer._board[0].switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(1);
-    reducer._board.switch.call(reducer);
+    reducer._board[0].switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(2);
-    reducer._board.switch.call(reducer);
+    reducer._board[0].switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(0);
-    reducer._board.switch.call(reducer);
+    reducer._board[0].switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(1);
-    reducer._board.switch.call(reducer);
+    reducer._board[0].switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(2);
-    reducer._board.switch.call(reducer);
+    reducer._board[0].switch.call(reducer);
     expect(result.ctx.currentPlayer).toEqual(0);
   });
 
   test('Basic Flow', ()=>{
 
-    reducer._board.test.call(reducer);
+    reducer._board[0].test.call(reducer);
     expect(result.G.num).toEqual(2);
     expect(result.ctx.gameover).toEqual(undefined);
 
-    reducer._board.test.call(reducer);
+    reducer._board[0].test.call(reducer);
     expect(result.G.num).toEqual(3);
     expect(result.ctx.gameover).toEqual({gameover: true});
+  });
+
+});
+
+describe('Advanced Framework', () => {
+
+  let reducer;
+
+  beforeAll(() => {
+    reducer = Object.create(Reducer);
+  });
+
+  test('Empty Setup', () => {
+    let result = reducer.start({});
+    expect(result.ctx.numPlayers).toEqual(2);
+  });
+
+  test('Semi-empty Setup', () => {
+    let result = reducer.start({
+      board: Board({test: () => {}}),
+    });
+
+    reducer._board[0].test.call(reducer);
+    expect(result.ctx.numPlayers).toEqual(2);
+  });
+
+  test('Multiplayer Setup', () => {
+    let result = reducer.start({
+      multiplayer: true,
+    });
+
+    expect(result._board.length).toEqual(2);
   });
 
 });

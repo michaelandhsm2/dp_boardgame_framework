@@ -3,63 +3,107 @@ import Board from '../framework/board';
 const UNIT_WIDTH = 50;
 
 var TicTacToeBoard = Board({
-  onSetup: function(){
-    var canvas = document.createElement("canvas");
-    canvas.height = 170;
-    canvas.width = 170;
+  onSetup: function(reducer, id){
+    let canvas = document.createElement("canvas");
+    canvas.height = 150;
+    canvas.width = 150;
     document.body.appendChild(canvas);
 
-    this.para = document.createElement("p");
-    document.body.appendChild(this.para);
+    let para = document.createElement("p");
+    document.body.appendChild(para);
 
-    canvas.addEventListener('click', (e) => {
-      if(e.clientX > 10 && e.clientY > 10){
+    function getPosition(e, isEmpty, callback){
+      let rect = canvas.getBoundingClientRect();
+      let pos = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      };
+      if(pos.x > 0 && pos.y > 0){
         for(let i = 0; i < 3; i++){
           for(let j = 0; j < 3; j++){
-            if(e.clientX > 10 + i * UNIT_WIDTH &&
-              e.clientX < 10 + (i+1) * UNIT_WIDTH &&
-              e.clientY > 10 + j * UNIT_WIDTH &&
-              e.clientY < 10 + (j+1) * UNIT_WIDTH &&
-              this.G.cells[i + j * 3] === null &&
-              this.ctx.gameover === undefined
+            if(pos.x > i * UNIT_WIDTH &&
+              pos.x < (i+1) * UNIT_WIDTH &&
+              pos.y > j * UNIT_WIDTH &&
+              pos.y < (j+1) * UNIT_WIDTH &&
+              (reducer.G.cells[i + j * 3] === null) === isEmpty &&
+              (id === null || id === reducer.ctx.currentPlayer) &&
+              reducer.ctx.gameover === undefined
             ){
-
-              this.ctx.moves.select.call(this, i + j * 3);
-              this.ctx.events.endTurn.call(this);
-              console.log(this.G.cells)
-              return null;
+              return callback(i, j);
             }
           }
         }
       }
+    }
+
+    canvas.addEventListener('click', (e) => {
+      getPosition(e, true, (i, j) => {
+        reducer.ctx.moves.select.call(reducer, i + j * 3);
+        reducer.ctx.events.endTurn.call(reducer);
+        return null;
+      })
     });
 
-    this.cvs = canvas.getContext('2d');
+    canvas.addEventListener('mousemove', (e) => {
+      reducer.update();
+      let ctx = canvas.getContext('2d');
+      ctx.save();
+      getPosition(e, true, (i, j) => {
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.35)';
+        ctx.fillRect(i * UNIT_WIDTH, j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
+        return null;
+      })
+      getPosition(e, false, (i, j) => {
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.35)';
+        ctx.fillRect(i * UNIT_WIDTH, j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
+        return null;
+      })
+      ctx.restore();
+    });
+
+    return ({
+      cvs:{
+        value: canvas.getContext('2d'),
+      },
+      para:{
+        value: para,
+      },
+      id:{
+        value: id,
+      }
+    });
   },
-  onUpdate: function(){
+  onUpdate: function(G, ctx){
 
   },
-  onDraw: function(){
-    this.cvs.clearRect(10, 10, 500, 500)
+  onDraw: function(G, ctx){
+    this.cvs.clearRect(0, 0, 500, 500)
     this.cvs.font = '56px serif';
     this.cvs.texAlign = 'center';
     for(let i = 0; i < 3; i++){
       for(let j = 0; j < 3; j++){
-        this.cvs.strokeRect(10 + i * UNIT_WIDTH, 10 + j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
-        if(this.G.cells[i + j * 3] !== null){
+        this.cvs.strokeRect(i * UNIT_WIDTH, j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
+        if(G.cells[i + j * 3] !== null){
           let text = 'O';
-          if(this.G.cells[i + j * 3 ] !== 0){
+          if(G.cells[i + j * 3 ] !== 0){
             text = 'X';
           }
-          this.cvs.fillText(text, 10 + i * UNIT_WIDTH + 5, 10 + (j+1) * UNIT_WIDTH - 5, UNIT_WIDTH);
+          this.cvs.fillText(text, i * UNIT_WIDTH + 5, (j+1) * UNIT_WIDTH - 5, UNIT_WIDTH);
         }
       }
     }
-    if(this.ctx.gameover){
-      if(this.ctx.gameover.draw){
+    if(ctx.gameover){
+      if(ctx.gameover.draw){
         this.para.innerHTML = "Draw!";
       }else{
-        this.para.innerHTML = "Winner: " + this.ctx.gameover.winner;
+        this.para.innerHTML = 'Winner: ' + ctx.gameover.winner;
+        this.cvs.save();
+        for(let i in ctx.gameover.tiles){
+          let n = ctx.gameover.tiles[i];
+          this.cvs.fillStyle = 'rgba(255, 255, 0, 0.35)';
+          this.cvs.fillRect(n%3 * UNIT_WIDTH, Math.floor(n/3) * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
+        }
+        this.cvs.restore();
       }
     }
   },

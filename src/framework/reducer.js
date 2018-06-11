@@ -1,7 +1,21 @@
+import Game from './game'
+import Board from './board'
+
 var Reducer = {
-  start:function({board, game, numPlayers}){
-    this._board = board;
-    this._board.onSetup.call(this);
+  start:function({board, game, numPlayers, multiplayer,}){
+
+    if(board === undefined) board = Board({});
+    if(game === undefined) game = Game({});
+    if(numPlayers === undefined) numPlayers = 2;
+
+    this._board = [];
+    if(!multiplayer){
+      this._board.push(Object.create(board, board.onSetup(this, null)));
+    }else{
+      for(let i = 0; i < numPlayers; i++){
+        this._board.push(Object.create(board, board.onSetup(this, i)));
+      }
+    }
 
     this._game = game;
     this.G = this._game.setup();
@@ -28,15 +42,23 @@ var Reducer = {
           this.ctx.gameover = gameover;
         }
 
-        this._board.onUpdate.call(this);
-        this._board.onDraw.call(this);
+        this.update();
       }
     }
 
-    this._board.onUpdate.call(this);
-    this._board.onDraw.call(this);
+    this.update();
     return(this);
   },
+  update: function(){
+    for(let i = 0; i < this._board.length; i++){
+      this._board[i].onUpdate(this.G, this.ctx);
+      this._board[i].onDraw(this.G, this.ctx);
+    }
+  },
+  createBoard: function(){
+    this._board = [];
+
+  }
 }
 
 function Framework(obj){

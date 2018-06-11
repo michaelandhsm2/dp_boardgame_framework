@@ -19,7 +19,7 @@ var TicTacToeGame = Game({
   flow: {
     endGameIf: (G, ctx) => {
       if(isVictory(G)){
-        return({winner: ctx.currentPlayer});
+        return({winner: ctx.currentPlayer, tiles:isVictory(G)});
       }
       if(isDraw(G)){
         return({draw: true});
@@ -37,7 +37,7 @@ function isVictory(G){
     if(G.cells[cond[0]] !== null &&
       G.cells[cond[0]] === G.cells[cond[1]] &&
       G.cells[cond[1]] === G.cells[cond[2]])
-      return true;
+      return cond;
   }
 
   return false;
