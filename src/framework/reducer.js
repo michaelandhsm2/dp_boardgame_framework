@@ -2,23 +2,15 @@ import Game from './game'
 import Board from './board'
 
 var Reducer = {
-  start:function({board, game, numPlayers, multiplayer,}){
+  start:function({board, game, numPlayers, multiplayer, ...args}){
 
     if(board === undefined) board = Board({});
     if(game === undefined) game = Game({});
     if(numPlayers === undefined) numPlayers = 2;
 
-    this._board = [];
-    if(!multiplayer){
-      this._board.push(Object.create(board, board.onSetup(this, null)));
-    }else{
-      for(let i = 0; i < numPlayers; i++){
-        this._board.push(Object.create(board, board.onSetup(this, i)));
-      }
-    }
-
     this._game = game;
-    this.G = this._game.setup();
+    let options = this._game.init({...args});
+    this.G = this._game.setup(options);
     this.ctx = {
       numPlayers,
       moves: {},
@@ -31,7 +23,17 @@ var Reducer = {
         },
       },
       currentPlayer: 0,
+      ...options,
     };
+
+    this._board = [];
+    if(!multiplayer){
+      this._board.push(Object.create(board, board.onSetup(this, null)));
+    }else{
+      for(let i = 0; i < numPlayers; i++){
+        this._board.push(Object.create(board, board.onSetup(this, i)));
+      }
+    }
 
     for(let i in this._game.moves){
       this.ctx.moves[this._game.moves[i].name] = function(...args){

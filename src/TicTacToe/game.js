@@ -1,10 +1,39 @@
 import Game from '../framework/game';
 
+let winCondition;
+
 var TicTacToeGame = Game({
 
-  setup: (numPlayers) => {
+  init: ({boardSize, ...args}) => {
+    if(!boardSize) boardSize = 3;
     return {
-      cells: Array(9).fill(null)
+      boardSize, ...args
+    };
+  },
+
+  setup: ({boardSize}) => {
+
+    winCondition = [];
+
+    let diagnal_R = [];
+    let diagnal_L = [];
+    for(let i = 0; i < boardSize; i++){
+      let horizontal = [];
+      let vertical = [];
+      for(let j = 0; j < boardSize; j++){
+        horizontal.push(i * boardSize + j);
+        vertical.push(i + j * boardSize);
+      }
+      winCondition.push(horizontal);
+      winCondition.push(vertical);
+      diagnal_L.push(i + i * boardSize);
+      diagnal_R.push((boardSize-i-1) + i * boardSize);
+    }
+    winCondition.push(diagnal_L);
+    winCondition.push(diagnal_R);
+
+    return {
+      cells: Array(Math.pow(boardSize,2)).fill(null)
     };
   },
 
@@ -30,13 +59,16 @@ var TicTacToeGame = Game({
 })
 
 function isVictory(G){
-  let winCondition = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
   for(let i in winCondition){
     let cond = winCondition[i];
-    if(G.cells[cond[0]] !== null &&
-      G.cells[cond[0]] === G.cells[cond[1]] &&
-      G.cells[cond[1]] === G.cells[cond[2]])
+
+    for(let j = 1; cond && j < cond.length; j++){
+      if(G.cells[cond[j]] === null || G.cells[cond[j-1]] !== G.cells[cond[j]]){
+        cond = null;
+      }
+    }
+    if(cond !== null)
       return cond;
   }
 
@@ -44,7 +76,7 @@ function isVictory(G){
 }
 
 function isDraw(G){
-  for(let i = 0; i < 9; i++){
+  for(let i = 0; i < G.cells.length; i++){
     if(G.cells[i] === null)
       return false;
   }

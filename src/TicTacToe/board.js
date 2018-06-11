@@ -5,8 +5,8 @@ const UNIT_WIDTH = 50;
 var TicTacToeBoard = Board({
   onSetup: function(reducer, id){
     let canvas = document.createElement("canvas");
-    canvas.height = 150;
-    canvas.width = 150;
+    canvas.height = reducer.ctx.boardSize * UNIT_WIDTH;
+    canvas.width = reducer.ctx.boardSize * UNIT_WIDTH;
     document.body.appendChild(canvas);
 
     let para = document.createElement("p");
@@ -19,13 +19,13 @@ var TicTacToeBoard = Board({
         y: e.clientY - rect.top
       };
       if(pos.x > 0 && pos.y > 0){
-        for(let i = 0; i < 3; i++){
-          for(let j = 0; j < 3; j++){
+        for(let i = 0; i < reducer.ctx.boardSize; i++){
+          for(let j = 0; j < reducer.ctx.boardSize; j++){
             if(pos.x > i * UNIT_WIDTH &&
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              (reducer.G.cells[i + j * 3] === null) === isEmpty &&
+              (reducer.G.cells[i + j * reducer.ctx.boardSize] === null) === isEmpty &&
               (id === null || id === reducer.ctx.currentPlayer) &&
               reducer.ctx.gameover === undefined
             ){
@@ -38,7 +38,7 @@ var TicTacToeBoard = Board({
 
     canvas.addEventListener('click', (e) => {
       getPosition(e, true, (i, j) => {
-        reducer.ctx.moves.select.call(reducer, i + j * 3);
+        reducer.ctx.moves.select.call(reducer, i + j * reducer.ctx.boardSize);
         reducer.ctx.events.endTurn.call(reducer);
         return null;
       })
@@ -80,12 +80,12 @@ var TicTacToeBoard = Board({
     this.cvs.clearRect(0, 0, 500, 500)
     this.cvs.font = '56px serif';
     this.cvs.texAlign = 'center';
-    for(let i = 0; i < 3; i++){
-      for(let j = 0; j < 3; j++){
+    for(let i = 0; i < ctx.boardSize; i++){
+      for(let j = 0; j < ctx.boardSize; j++){
         this.cvs.strokeRect(i * UNIT_WIDTH, j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
-        if(G.cells[i + j * 3] !== null){
+        if(G.cells[i + j * ctx.boardSize] !== null){
           let text = 'O';
-          if(G.cells[i + j * 3 ] !== 0){
+          if(G.cells[i + j * ctx.boardSize ] !== 0){
             text = 'X';
           }
           this.cvs.fillText(text, i * UNIT_WIDTH + 5, (j+1) * UNIT_WIDTH - 5, UNIT_WIDTH);
@@ -101,7 +101,7 @@ var TicTacToeBoard = Board({
         for(let i in ctx.gameover.tiles){
           let n = ctx.gameover.tiles[i];
           this.cvs.fillStyle = 'rgba(255, 255, 0, 0.35)';
-          this.cvs.fillRect(n%3 * UNIT_WIDTH, Math.floor(n/3) * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
+          this.cvs.fillRect(n%ctx.boardSize * UNIT_WIDTH, Math.floor(n/ctx.boardSize) * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
         }
         this.cvs.restore();
       }

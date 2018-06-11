@@ -19,11 +19,9 @@ describe('Basic Framework', () => {
     });
 
     game = Game({
-      setup: (numPlayers) => {
-        const G = {
-          num: 0
-        };
-        return G;
+      setup: ({num}) => {
+        if(num === undefined) num = 0;
+        return {num};
       },
 
       moves: {
@@ -91,6 +89,16 @@ describe('Basic Framework', () => {
     reducer._board[0].test.call(reducer);
     expect(result.G.num).toEqual(3);
     expect(result.ctx.gameover).toEqual({gameover: true});
+  });
+
+  test('Setup with Options', () => {
+    let result = reducer.start({
+      game,
+      num: 2,
+    });
+
+    expect(result.ctx.num).toEqual(2);
+    expect(result.G.num).toEqual(2);
   });
 
 });
