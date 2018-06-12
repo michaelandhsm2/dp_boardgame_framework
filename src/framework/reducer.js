@@ -11,6 +11,7 @@ var Reducer = {
     this._game = game;
     let options = this._game.init({...args});
     this.G = this._game.setup(options);
+    this.stack = [];
     this.ctx = {
       numPlayers,
       moves: {},
@@ -37,6 +38,13 @@ var Reducer = {
 
     for(let i in this._game.moves){
       this.ctx.moves[this._game.moves[i].name] = function(...args){
+        this.stack.push({
+          type: this._game.moves[i].name,
+          state: {
+            G: this.G,
+            currentPlayer: this.ctx.currentPlayer,
+          },
+        });
         this.G = this._game.moves[i](this.G, this.ctx, ...args);
 
         let gameover = this._game.flow.endGameIf(this.G, this.ctx);
@@ -57,10 +65,12 @@ var Reducer = {
       this._board[i].onDraw(this.G, this.ctx);
     }
   },
-  createBoard: function(){
-    this._board = [];
-
-  }
+  undo: function(){
+    let lastState = this.stack.pop().state;
+    this.G = lastState.G;
+    this.ctx.currentPlayer = lastState.currentPlayer;
+    this.update();
+  },
 }
 
 function Framework(obj){
