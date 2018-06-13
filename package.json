@@ -11,6 +11,7 @@
     "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.19",
     "file-loader": "^1.1.11",
+    "firebase": "^5.0.4",
     "html-webpack-plugin": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^23.1.0",
@@ -27,8 +28,12 @@
     "coverage": "jest --coverage --collectCoverageFrom=src/**.js"
   },
   "babel": {
-    "presets": ["env"],
-    "plugins": ["syntax-object-rest-spread"]
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      "syntax-object-rest-spread"
+    ]
   },
   "jest": {
     "moduleNameMapper": {
