@@ -3,10 +3,10 @@ import Board from '../framework/board';
 const UNIT_WIDTH = 50;
 
 var TicTacToeBoard = Board({
-  onSetup: function(reducer, id){
+  onSetup: function(flow, id){
     let canvas = document.createElement("canvas");
-    canvas.height = reducer.ctx.boardSize * UNIT_WIDTH;
-    canvas.width = reducer.ctx.boardSize * UNIT_WIDTH;
+    canvas.height = flow.state.ctx.boardSize * UNIT_WIDTH;
+    canvas.width = flow.state.ctx.boardSize * UNIT_WIDTH;
     document.body.appendChild(canvas);
 
     let para = document.createElement("p");
@@ -19,15 +19,15 @@ var TicTacToeBoard = Board({
         y: e.clientY - rect.top
       };
       if(pos.x > 0 && pos.y > 0){
-        for(let i = 0; i < reducer.ctx.boardSize; i++){
-          for(let j = 0; j < reducer.ctx.boardSize; j++){
+        for(let i = 0; i < flow.state.ctx.boardSize; i++){
+          for(let j = 0; j < flow.state.ctx.boardSize; j++){
             if(pos.x > i * UNIT_WIDTH &&
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              (reducer.G.cells[i + j * reducer.ctx.boardSize] === null) === isEmpty &&
-              (id === null || id === reducer.ctx.currentPlayer) &&
-              reducer.ctx.gameover === undefined
+              (flow.state.G.cells[i + j * flow.state.ctx.boardSize] === null) === isEmpty &&
+              (id === null || id === flow.state.ctx.currentPlayer) &&
+              flow.state.ctx.gameover === undefined
             ){
               return callback(i, j);
             }
@@ -38,14 +38,14 @@ var TicTacToeBoard = Board({
 
     canvas.addEventListener('click', (e) => {
       getPosition(e, true, (i, j) => {
-        reducer.ctx.moves.select.call(reducer, i + j * reducer.ctx.boardSize);
-        reducer.ctx.events.endTurn.call(reducer);
+        flow.select(i + j * flow.state.ctx.boardSize);
+        flow.endTurn();
         return null;
       })
     });
 
     canvas.addEventListener('mousemove', (e) => {
-      reducer.update();
+      flow.update();
       let ctx = canvas.getContext('2d');
       ctx.save();
       getPosition(e, true, (i, j) => {

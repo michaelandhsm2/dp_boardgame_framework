@@ -1,4 +1,4 @@
-import {Framework} from './framework/reducer';
+import Framework from './framework/framework';
 
 import SimpleTicTacToeBoard from './SimpleTicTacToe/board';
 import SimpleTicTacToeGame from './SimpleTicTacToe/game';
@@ -6,8 +6,9 @@ import TicTacToeBoard from './TicTacToe/board';
 import TicTacToeGame from './TicTacToe/game';
 
 const TicTacToe_SingleBoard = {
-  board: SimpleTicTacToeBoard,
+  board: TicTacToeBoard,
   game: TicTacToeGame,
+  boardSize: 6,
 };
 
 const TicTacToe_MultiBoard = {
@@ -17,4 +18,4 @@ const TicTacToe_MultiBoard = {
   boardSize: 2,
 }
 
-Framework(TicTacToe_MultiBoard);
+Framework(TicTacToe_SingleBoard);

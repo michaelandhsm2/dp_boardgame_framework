@@ -3,7 +3,8 @@ import Board from '../framework/board';
 const UNIT_WIDTH = 50;
 
 var TicTacToeBoard = Board({
-  onSetup: function(reducer, id){
+  onSetup: function(flow, id){
+
     let canvas = document.createElement("canvas");
     canvas.height = 150;
     canvas.width = 150;
@@ -25,11 +26,11 @@ var TicTacToeBoard = Board({
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              reducer.G.cells[i + j * 3] === null &&
-              reducer.ctx.gameover === undefined
+              flow.state.G.cells[i + j * 3] === null &&
+              flow.state.ctx.gameover === undefined
             ){
-              reducer.ctx.moves.select.call(reducer, i + j * 3);
-              reducer.ctx.events.endTurn.call(reducer);
+              flow.select(i + j * 3);
+              flow.endTurn();
               return null;
             }
           }
