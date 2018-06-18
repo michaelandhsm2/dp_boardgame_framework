@@ -7,36 +7,58 @@ var Flow = {
 
     if (!numPlayers) numPlayers = 2;
     if (game === undefined) game = Game({});
+    if (multiplayer === undefined) multiplayer = {};
+    this.remote = multiplayer.remote;
 
-    let _reducer = CreateGameReducer({
+    this._reducer = CreateGameReducer({
       game,
       numPlayers,
       ...args
     });
 
-    this.state = _reducer();
+    this.state = this._reducer();
+    this._gameEvents = game.flow;
 
     for(let i in game.moves){
       this[game.moves[i].name] = function(...args){
-        this.state = _reducer(game.moves[i].name, this.state, ...args);
-        if(game.flow.endGameIf && game.flow.endGameIf(this.state.G, this.state.ctx)){
-          this.state.ctx.gameover = game.flow.endGameIf(this.state.G, this.state.ctx);
-        }
-        this.update();
+        this.triggerAction(game.moves[i].name, this.state, ...args);
       }
     }
-
     for(let i in game.flow){
       this[game.flow[i].name] = function(...args){
-        this.state = _reducer(game.flow[i].name, this.state, ...args);
+        this.triggerAction(game.flow[i].name, this.state, ...args);
       }
-      this.update();
     }
 
     return this;
   },
+  setDB: function(ref){
+    this._ref = ref;
+  },
+  triggerAction: function(action, state, ...args){
+    if(this.remote){
+      this._ref.set({
+        action,
+        state,
+        args:[...args],
+      });
+    }else{
+      this.action({action, state, args:[...args]});
+    }
+  },
+  action: function({action, state, args}){
+    if(args === undefined) args = [];
+    this.state = this._reducer(action, state, ...args);
+
+    if(this._gameEvents.endGameIf && this._gameEvents.endGameIf(this.state.G, this.state.ctx)){
+      this.state.ctx.gameover = this._gameEvents.endGameIf(this.state.G, this.state.ctx);
+      this.endTurn = (state) => (state)
+    }
+    this.update();
+  },
   update: function(){
-  }
+    
+  },
 };
 
 export default Flow;

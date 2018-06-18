@@ -3,15 +3,15 @@ import 'firebase/database'
 import config from '../../firebaseKey.json'
 
 var Client = {
-  start: function(reducer, id){
+  start: function(flow, id){
     firebase.initializeApp(config);
-    var db = firebase.database();;
-    reducer.ctx.gameId = id;
-    console.log(reducer);
+    var db = firebase.database();
+    var ref = db.ref('games/' + id );
 
-    db.ref('games/' + id ).on('value', function(snapshot) {
-      console.log(snapshot.val());
-      if(snapshot.val()) reducer.action(snapshot.val());
+    flow.setDB(ref);
+
+    ref.on('value', function(snapshot) {
+      if(snapshot.val()) flow.action(snapshot.val());
     });
 
     return db;

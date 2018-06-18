@@ -13,10 +13,13 @@ module.exports = {
   devServer: {
     contentBase: './dist'
   },
+  optimization: {
+    minimize: false
+  },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Output Management'
+      title: 'Design Pattern Term Project'
     })
   ],
   module: {

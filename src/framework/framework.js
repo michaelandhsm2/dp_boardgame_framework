@@ -1,7 +1,7 @@
 import Game from './game'
 import Board from './board'
 import Flow from './flow'
-
+import Client from './client'
 
 function Framework({board, ...args}){
   if (board === undefined) board = Board({});
@@ -15,6 +15,7 @@ function Framework({board, ...args}){
       BoardReducer._board.push(Object.create(board, board.onSetup(BoardReducer, i)));
     }
   }else if(args.multiplayer && args.multiplayer.remote){
+    var db = Client.start(BoardReducer, args.multiplayer.gameId);
     BoardReducer._board.push(Object.create(board, board.onSetup(BoardReducer, args.multiplayer.playerId)));
   }else{
     BoardReducer._board.push(Object.create(board, board.onSetup(BoardReducer, null)));

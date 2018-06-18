@@ -4,12 +4,14 @@ import Flow from '../src/framework/flow';
 import CreateGameReducer from '../src/framework/reducer';
 import TicTacToeGame from '../src/TicTacToe/game';
 
+const NULL = false;
+
 describe('Fundemental Tic Tac Toe Game', () => {
 
   let flow, cells;
 
   beforeAll(() => {
-    cells = Array(9).fill(null);
+    cells = Array(9).fill(NULL);
 
     flow = Flow.init({
       game: TicTacToeGame,
@@ -80,7 +82,7 @@ describe('Advanced Tic Tac Toe Game', () => {
       boardSize: 4,
     });
 
-    expect(flow.state.G.cells).toEqual(Array(16).fill(null));
+    expect(flow.state.G.cells).toEqual(Array(16).fill(NULL));
   });
 
   test('Diffrent Size Board Draw', () => {
@@ -89,7 +91,7 @@ describe('Advanced Tic Tac Toe Game', () => {
       boardSize: 4,
     });
 
-    expect(flow.state.G.cells).toEqual(Array(16).fill(null));
+    expect(flow.state.G.cells).toEqual(Array(16).fill(NULL));
 
     flow.select(0);
     flow.select(1);
@@ -118,7 +120,7 @@ describe('Advanced Tic Tac Toe Game', () => {
       boardSize: 2,
     });
 
-    expect(flow.state.G.cells).toEqual(Array(4).fill(null));
+    expect(flow.state.G.cells).toEqual(Array(4).fill(NULL));
     flow.select(0);
     flow.select(1);
     expect(flow.state.ctx.gameover).toEqual({winner:0, tiles:[0,1]});

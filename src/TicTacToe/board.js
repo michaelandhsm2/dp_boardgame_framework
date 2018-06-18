@@ -1,6 +1,7 @@
 import Board from '../framework/board';
 
 const UNIT_WIDTH = 50;
+const NULL = false;
 
 var TicTacToeBoard = Board({
   onSetup: function(flow, id){
@@ -25,7 +26,7 @@ var TicTacToeBoard = Board({
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              (flow.state.G.cells[i + j * flow.state.ctx.boardSize] === null) === isEmpty &&
+              (flow.state.G.cells[i + j * flow.state.ctx.boardSize] === NULL) === isEmpty &&
               (id === null || id === flow.state.ctx.currentPlayer) &&
               flow.state.ctx.gameover === undefined
             ){
@@ -83,7 +84,7 @@ var TicTacToeBoard = Board({
     for(let i = 0; i < ctx.boardSize; i++){
       for(let j = 0; j < ctx.boardSize; j++){
         this.cvs.strokeRect(i * UNIT_WIDTH, j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
-        if(G.cells[i + j * ctx.boardSize] !== null){
+        if(G.cells[i + j * ctx.boardSize] !== NULL){
           let text = 'O';
           if(G.cells[i + j * ctx.boardSize ] !== 0){
             text = 'X';

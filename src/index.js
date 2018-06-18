@@ -1,21 +1,33 @@
 import Framework from './framework/framework';
 
-import SimpleTicTacToeBoard from './SimpleTicTacToe/board';
-import SimpleTicTacToeGame from './SimpleTicTacToe/game';
+// import SimpleTicTacToeBoard from './SimpleTicTacToe/board';
+// import SimpleTicTacToeGame from './SimpleTicTacToe/game';
+// const TicTacToe_SimpleBoard = {
+//   board: SimpleTicTacToeBoard,
+//   game: SimpleTicTacToeGame,
+// };
+// Framework(TicTacToe_SimpleBoard);
+
+// import TicTacToeBoard from './TicTacToe/board';
+// import TicTacToeGame from './TicTacToe/game';
+// const TicTacToe_SingleBoard = {
+//   board: TicTacToeBoard,
+//   game: TicTacToeGame,
+//   boardSize: 4,
+//   // multiplayer: true,
+// };
+// Framework(TicTacToe_SingleBoard);
+
 import TicTacToeBoard from './TicTacToe/board';
 import TicTacToeGame from './TicTacToe/game';
-
-const TicTacToe_SingleBoard = {
-  board: TicTacToeBoard,
-  game: TicTacToeGame,
-  boardSize: 6,
-};
-
 const TicTacToe_MultiBoard = {
   board: TicTacToeBoard,
   game: TicTacToeGame,
-  multiplayer: true,
   boardSize: 2,
+  multiplayer:{
+    remote: true,
+    gameId: 0,
+    playerId: 0,
+  },
 }
-
-Framework(TicTacToe_SingleBoard);
+Framework(TicTacToe_MultiBoard);

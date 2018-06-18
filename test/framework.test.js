@@ -119,6 +119,29 @@ describe('Basic Framework', () => {
     expect(flow.state.ctx.num).toEqual(2);
     expect(flow.state.G.num).toEqual(2);
   });
+
+  test('Pass Action', () => {
+    let flow = Flow.init({
+      game,
+      numPlayers: 3,
+    });
+    expect(flow.state.G.num).toEqual(0);
+    expect(flow.state.ctx.currentPlayer).toEqual(0);
+
+    flow.action({
+      action: 'count',
+      state:{
+        G: {num: 3},
+        ctx: {
+          currentPlayer: 2,
+          playerOrder: [0,1,2],
+        },
+      },
+      args:[]
+    });
+    expect(flow.state.G.num).toEqual(4);
+    expect(flow.state.ctx.currentPlayer).toEqual(2);
+  });
   //
   // test('Storing States', () => {
   //   reducer.start({
