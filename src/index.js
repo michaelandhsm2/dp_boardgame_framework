@@ -27,7 +27,7 @@ const TicTacToe_MultiBoard = {
   multiplayer:{
     remote: true,
     gameId: 0,
-    playerId: 0,
+    playerId: 1,
   },
 }
 Framework(TicTacToe_MultiBoard);

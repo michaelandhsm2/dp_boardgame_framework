@@ -15,28 +15,29 @@ describe('Fundemental Tic Tac Toe Game', () => {
 
     flow = Flow.init({
       game: TicTacToeGame,
+      numPlayers: 2,
     });
   });
 
   test('Basic Setup', () => {
-    expect(flow.state.G.cells).toEqual(cells);
-    expect(flow.state.ctx.currentPlayer).toEqual(0);
+    expect(flow.getState().G.cells).toEqual(cells);
+    expect(flow.getState().ctx.currentPlayer).toEqual(0);
   });
 
   test('Basic Moves', () => {
     cells[0] = 0;
     flow.select(0);
-    expect(flow.state.G.cells).toEqual(cells);
+    expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
 
     cells[1] = 1;
     flow.select(1);
-    expect(flow.state.G.cells).toEqual(cells);
+    expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
 
     cells[4] = 0;
     flow.select(4);
-    expect(flow.state.G.cells).toEqual(cells);
+    expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
   });
 
@@ -44,13 +45,13 @@ describe('Fundemental Tic Tac Toe Game', () => {
     cells[2] = 1;
     flow.select(2);
     flow.endTurn();
-    expect(flow.state.ctx.gameover).toEqual(undefined);
+    expect(flow.getState().ctx.gameover).toEqual(undefined);
 
     cells[8] = 0;
     flow.select(8);
     flow.endTurn();
-    expect(flow.state.G.cells).toEqual(cells);
-    expect(flow.state.ctx.gameover).toEqual({winner: 0, tiles:[0, 4, 8]});
+    expect(flow.getState().G.cells).toEqual(cells);
+    expect(flow.getState().ctx.gameover).toEqual({winner: 0, tiles:[0, 4, 8]});
   });
 });
 
@@ -73,7 +74,7 @@ describe('Advanced Tic Tac Toe Game', () => {
     flow.select(5);
     flow.endTurn();
 
-    expect(flow.state.ctx.gameover).toEqual({draw:true});
+    expect(flow.getState().ctx.gameover).toEqual({draw:true});
   });
 
   test('Diffrent Size Board', () => {
@@ -82,7 +83,7 @@ describe('Advanced Tic Tac Toe Game', () => {
       boardSize: 4,
     });
 
-    expect(flow.state.G.cells).toEqual(Array(16).fill(NULL));
+    expect(flow.getState().G.cells).toEqual(Array(16).fill(NULL));
   });
 
   test('Diffrent Size Board Draw', () => {
@@ -91,7 +92,7 @@ describe('Advanced Tic Tac Toe Game', () => {
       boardSize: 4,
     });
 
-    expect(flow.state.G.cells).toEqual(Array(16).fill(NULL));
+    expect(flow.getState().G.cells).toEqual(Array(16).fill(NULL));
 
     flow.select(0);
     flow.select(1);
@@ -111,7 +112,7 @@ describe('Advanced Tic Tac Toe Game', () => {
     flow.select(13);
     flow.select(15);
     flow.endTurn();
-    expect(flow.state.ctx.gameover).toEqual({draw: true});
+    expect(flow.getState().ctx.gameover).toEqual({draw: true});
   });
 
   test('Diffrent Size Board Victory', () => {
@@ -120,10 +121,10 @@ describe('Advanced Tic Tac Toe Game', () => {
       boardSize: 2,
     });
 
-    expect(flow.state.G.cells).toEqual(Array(4).fill(NULL));
+    expect(flow.getState().G.cells).toEqual(Array(4).fill(NULL));
     flow.select(0);
     flow.select(1);
-    expect(flow.state.ctx.gameover).toEqual({winner:0, tiles:[0,1]});
+    expect(flow.getState().ctx.gameover).toEqual({winner:0, tiles:[0,1]});
   });
 
 });

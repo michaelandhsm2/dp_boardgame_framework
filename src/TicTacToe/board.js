@@ -6,8 +6,8 @@ const NULL = false;
 var TicTacToeBoard = Board({
   onSetup: function(flow, id){
     let canvas = document.createElement("canvas");
-    canvas.height = flow.state.ctx.boardSize * UNIT_WIDTH;
-    canvas.width = flow.state.ctx.boardSize * UNIT_WIDTH;
+    canvas.height = flow.getState().ctx.boardSize * UNIT_WIDTH;
+    canvas.width = flow.getState().ctx.boardSize * UNIT_WIDTH;
     document.body.appendChild(canvas);
 
     let para = document.createElement("p");
@@ -20,15 +20,16 @@ var TicTacToeBoard = Board({
         y: e.clientY - rect.top
       };
       if(pos.x > 0 && pos.y > 0){
-        for(let i = 0; i < flow.state.ctx.boardSize; i++){
-          for(let j = 0; j < flow.state.ctx.boardSize; j++){
+        let state = flow.getState();
+        for(let i = 0; i < state.ctx.boardSize; i++){
+          for(let j = 0; j < state.ctx.boardSize; j++){
             if(pos.x > i * UNIT_WIDTH &&
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              (flow.state.G.cells[i + j * flow.state.ctx.boardSize] === NULL) === isEmpty &&
-              (id === null || id === flow.state.ctx.currentPlayer) &&
-              flow.state.ctx.gameover === undefined
+              (state.G.cells[i + j * state.ctx.boardSize] === NULL) === isEmpty &&
+              (id === null || id === state.ctx.currentPlayer) &&
+              state.ctx.gameover === undefined
             ){
               return callback(i, j);
             }
@@ -39,14 +40,14 @@ var TicTacToeBoard = Board({
 
     canvas.addEventListener('click', (e) => {
       getPosition(e, true, (i, j) => {
-        flow.select(i + j * flow.state.ctx.boardSize);
+        flow.select(i + j * flow.getState().ctx.boardSize);
         flow.endTurn();
         return null;
       })
     });
 
     canvas.addEventListener('mousemove', (e) => {
-      flow.update();
+      flow.update(flow.getState());
       let ctx = canvas.getContext('2d');
       ctx.save();
       getPosition(e, true, (i, j) => {

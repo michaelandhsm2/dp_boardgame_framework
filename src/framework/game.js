@@ -4,18 +4,19 @@ function Game({init, setup, moves, flow, ...args}){
   if(!moves) moves = {};
   if(!flow) flow = {};
 
-  flow['endTurn'] = function endTurn(state){
-    let currentIndex = state.ctx.playerOrder.indexOf(state.ctx.currentPlayer);
-    if(currentIndex + 1 === state.ctx.numPlayers){
+  if(!flow['endGameIf']) flow['endGameIf'] = (G, ctx) => (null)
+  flow['endTurn'] = function endTurn(G, ctx){
+    let currentIndex = ctx.playerOrder.indexOf(ctx.currentPlayer);
+    if(currentIndex + 1 === ctx.numPlayers){
       currentIndex = 0;
     }else{
       currentIndex += 1;
     }
 
-    return {...state,
+    return {G,
       ctx: {
-        ...state.ctx,
-        currentPlayer: state.ctx.playerOrder[currentIndex],
+        ...ctx,
+        currentPlayer: ctx.playerOrder[currentIndex],
       }
     };
   }
@@ -25,14 +26,13 @@ function Game({init, setup, moves, flow, ...args}){
     setup,
     moves,
     flow,
-    processMoves: (action, state, ...args) => {
-      let _state = state;
-      _state.G = moves[action](state.G, state.ctx, ...args);
-      return _state;
-    },
-    processEvents: (action, state, ...args) => {
-      let _state = state;
-      _state = flow[action](state, ...args);
+    process: (action, state, ...args) => {
+      let _state = JSON.parse(JSON.stringify(state));
+      if(moves.hasOwnProperty(action)){
+        _state.G = moves[action](state.G, state.ctx, ...args);
+      }else if(flow.hasOwnProperty(action)){
+        _state = flow[action](state.G, state.ctx, ...args);
+      }
       return _state;
     },
     ...args

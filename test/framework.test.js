@@ -6,20 +6,9 @@ import Flow from '../src/framework/flow'
 
 describe('Basic Framework', () => {
 
-  let game, board;
+  let game;
 
   beforeAll(() => {
-    // reducer = Object.create(Reducer);
-
-    board = Board({
-      test: function(){
-        this.ctx.moves.count.call(this);
-      },
-      switch: function(){
-        this.ctx.events.endTurn.call(this);
-      },
-    });
-
     game = Game({
       setup: ({num}) => {
         if(num === undefined) num = 0;
@@ -47,7 +36,7 @@ describe('Basic Framework', () => {
     let reducer = CreateGameReducer({
       game, numPlayers: 3
     });
-    let state = reducer();
+    let state = reducer.getState();
     expect(state.ctx.numPlayers).toEqual(3);
   });
 
@@ -55,15 +44,15 @@ describe('Basic Framework', () => {
     let reducer = CreateGameReducer({
       game, numPlayers: 3
     });
-    let state = reducer();
+    let state = reducer.getState();
     expect(state.G.num).toEqual(0);
 
     // Reducer w/out Given State
-    state = reducer('count');
+    state = reducer.runCommand('count');
     expect(state.G.num).toEqual(1);
 
     // Reducer w/ Given State
-    state = reducer('count', {...state, G: { num: 3}});
+    state = reducer.runCommand('count', {...state, G: { num: 3}});
     expect(state.G.num).toEqual(4);
   });
 
@@ -71,12 +60,12 @@ describe('Basic Framework', () => {
     let flow = Flow.init({
       game,
     });
-    expect(flow.state.G.num).toEqual(0);
+    expect(flow.getState().G.num).toEqual(0);
 
     flow.count();
-    expect(flow.state.G.num).toEqual(1);
+    expect(flow.getState().G.num).toEqual(1);
     flow.count();
-    expect(flow.state.G.num).toEqual(2);
+    expect(flow.getState().G.num).toEqual(2);
   });
 
   test('Basic Turns', () => {
@@ -84,15 +73,15 @@ describe('Basic Framework', () => {
       game,
       numPlayers: 3,
     });
-    expect(flow.state.ctx.playerOrder).toEqual([0,1,2]);
-    expect(flow.state.ctx.currentPlayer).toEqual(0);
+    expect(flow.getState().ctx.playerOrder).toEqual([0,1,2]);
+    expect(flow.getState().ctx.currentPlayer).toEqual(0);
 
     flow.endTurn();
-    expect(flow.state.ctx.currentPlayer).toEqual(1);
+    expect(flow.getState().ctx.currentPlayer).toEqual(1);
     flow.endTurn();
-    expect(flow.state.ctx.currentPlayer).toEqual(2);
+    expect(flow.getState().ctx.currentPlayer).toEqual(2);
     flow.endTurn();
-    expect(flow.state.ctx.currentPlayer).toEqual(0);
+    expect(flow.getState().ctx.currentPlayer).toEqual(0);
   });
 
   test('Basic Flow', ()=>{
@@ -101,13 +90,13 @@ describe('Basic Framework', () => {
     });
 
     flow.count();
-    expect(flow.state.G.num).toEqual(1);
-    expect(flow.state.ctx.gameover).toEqual(undefined);
+    expect(flow.getState().G.num).toEqual(1);
+    expect(flow.getState().ctx.gameover).toEqual(undefined);
 
     flow.count();
     flow.count();
-    expect(flow.state.G.num).toEqual(3);
-    expect(flow.state.ctx.gameover).toEqual({gameover: true});
+    expect(flow.getState().G.num).toEqual(3);
+    expect(flow.getState().ctx.gameover).toEqual({gameover: true});
   });
 
   test('Setup with Options', () => {
@@ -116,8 +105,8 @@ describe('Basic Framework', () => {
       num: 2,
     });
 
-    expect(flow.state.ctx.num).toEqual(2);
-    expect(flow.state.G.num).toEqual(2);
+    expect(flow.getState().ctx.num).toEqual(2);
+    expect(flow.getState().G.num).toEqual(2);
   });
 
   test('Pass Action', () => {
@@ -125,8 +114,8 @@ describe('Basic Framework', () => {
       game,
       numPlayers: 3,
     });
-    expect(flow.state.G.num).toEqual(0);
-    expect(flow.state.ctx.currentPlayer).toEqual(0);
+    expect(flow.getState().G.num).toEqual(0);
+    expect(flow.getState().ctx.currentPlayer).toEqual(0);
 
     flow.action({
       action: 'count',
@@ -139,41 +128,13 @@ describe('Basic Framework', () => {
       },
       args:[]
     });
-    expect(flow.state.G.num).toEqual(4);
-    expect(flow.state.ctx.currentPlayer).toEqual(2);
+    expect(flow.getState().G.num).toEqual(4);
+    expect(flow.getState().ctx.currentPlayer).toEqual(2);
   });
-  //
-  // test('Storing States', () => {
-  //   reducer.start({
-  //     game,
-  //   });
-  //
-  //   let {moves, events, ...options} = reducer.ctx;
-  //   reducer.ctx.moves.count.call(reducer);
-  //   expect(reducer.G.num).toEqual(1);
-  //   expect(reducer.stack.length).toEqual(1);
-  //   expect(reducer.stack[0]).toEqual({
-  //     type:'count',
-  //     state:{
-  //       G: { num: 0 },
-  //       currentPlayer: 0,
-  //     },
-  //   });
-  //
-  //   reducer.undo();
-  //   expect(reducer.G.num).toEqual(0);
-  //   expect(reducer.stack.length).toEqual(0);
-  // });
 
 });
 
 describe('Advanced Framework', () => {
-
-  test('Empty Setup', () => {
-    let flow = Flow.init({});
-    expect(flow.state.ctx.numPlayers).toEqual(2);
-  });
-
   test('Singleplayer Setup', () => {
     let board = Framework({});
     expect(board.length).toEqual(1);

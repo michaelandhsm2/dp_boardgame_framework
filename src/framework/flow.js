@@ -1,12 +1,8 @@
 import CreateGameReducer from './reducer'
-import Game from './game'
-import Board from './board'
+import Client from './client'
 
 var Flow = {
   init: function({game, board, numPlayers, multiplayer, ...args}){
-
-    if (!numPlayers) numPlayers = 2;
-    if (game === undefined) game = Game({});
     if (multiplayer === undefined) multiplayer = {};
     this.remote = multiplayer.remote;
 
@@ -16,48 +12,51 @@ var Flow = {
       ...args
     });
 
-    this.state = this._reducer();
     this._gameEvents = game.flow;
 
     for(let i in game.moves){
       this[game.moves[i].name] = function(...args){
-        this.triggerAction(game.moves[i].name, this.state, ...args);
+        this.triggerAction(game.moves[i].name, ...args);
       }
     }
     for(let i in game.flow){
       this[game.flow[i].name] = function(...args){
-        this.triggerAction(game.flow[i].name, this.state, ...args);
+        this.triggerAction(game.flow[i].name, ...args);
       }
+    }
+
+    if(multiplayer && multiplayer.remote){
+      this._ref = Client.start(this, multiplayer.gameId);
     }
 
     return this;
   },
-  setDB: function(ref){
-    this._ref = ref;
-  },
-  triggerAction: function(action, state, ...args){
+  triggerAction: function(action, ...args){
     if(this.remote){
       this._ref.set({
         action,
-        state,
+        state: this._reducer.getState(),
         args:[...args],
       });
     }else{
-      this.action({action, state, args:[...args]});
+      this.action({action, args:[...args]});
     }
   },
   action: function({action, state, args}){
     if(args === undefined) args = [];
-    this.state = this._reducer(action, state, ...args);
+    let _state = this._reducer.runCommand(action, state, ...args);
 
-    if(this._gameEvents.endGameIf && this._gameEvents.endGameIf(this.state.G, this.state.ctx)){
-      this.state.ctx.gameover = this._gameEvents.endGameIf(this.state.G, this.state.ctx);
-      this.endTurn = (state) => (state)
+    if(this._gameEvents.endGameIf(_state.G, _state.ctx)){
+      _state.ctx.gameover = this._gameEvents.endGameIf(_state.G, _state.ctx);
+      this._reducer.setState(_state);
+      this.endTurn = (_state) => (_state)
     }
-    this.update();
+    this.update(_state);
   },
-  update: function(){
-    
+  getState: function(){
+    return this._reducer.getState();
+  },
+  update: function(_state){
   },
 };
 

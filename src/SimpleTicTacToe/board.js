@@ -20,14 +20,15 @@ var TicTacToeBoard = Board({
         y: e.clientY - rect.top
       };
       if(pos.x > 0 && pos.y > 0){
+        let state = flow.getState();
         for(let i = 0; i < 3; i++){
           for(let j = 0; j < 3; j++){
             if(pos.x > i * UNIT_WIDTH &&
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              flow.state.G.cells[i + j * 3] === null &&
-              flow.state.ctx.gameover === undefined
+              state.G.cells[i + j * 3] === null &&
+              state.ctx.gameover === undefined
             ){
               flow.select(i + j * 3);
               flow.endTurn();
