@@ -18,16 +18,30 @@ import Framework from './framework/framework';
 // };
 // Framework(TicTacToe_SingleBoard);
 
-import TicTacToeBoard from './TicTacToe/board';
-import TicTacToeGame from './TicTacToe/game';
-const TicTacToe_MultiBoard = {
-  board: TicTacToeBoard,
-  game: TicTacToeGame,
-  boardSize: 2,
+// import TicTacToeBoard from './TicTacToe/board';
+// import TicTacToeGame from './TicTacToe/game';
+// const TicTacToe_MultiBoard = {
+//   board: TicTacToeBoard,
+//   game: TicTacToeGame,
+//   boardSize: 2,
+//   multiplayer:{
+//     remote: true,
+//     gameId: 0,
+//     playerId: 1,
+//   },
+// }
+// Framework(TicTacToe_MultiBoard);
+
+import DrawingBoard from './Drawing/board';
+import DrawingGame from './Drawing/game';
+const Drawing = {
+  board: DrawingBoard,
+  game: DrawingGame,
+  boardSize: 400,
   multiplayer:{
     remote: true,
     gameId: 0,
-    playerId: 1,
+    playerId: 0,
   },
 }
-Framework(TicTacToe_MultiBoard);
+Framework(Drawing);
