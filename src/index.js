@@ -32,16 +32,16 @@ import Framework from './framework/framework';
 // }
 // Framework(TicTacToe_MultiBoard);
 
-import DrawingBoard from './Drawing/board';
-import DrawingGame from './Drawing/game';
-const Drawing = {
-  board: DrawingBoard,
-  game: DrawingGame,
-  boardSize: 400,
-  multiplayer:{
-    remote: true,
-    gameId: 0,
-    playerId: 0,
-  },
-}
-Framework(Drawing);
+// import DrawingBoard from './Drawing/board';
+// import DrawingGame from './Drawing/game';
+// const Drawing = {
+//   board: DrawingBoard,
+//   game: DrawingGame,
+//   boardSize: 400,
+//   // multiplayer:{
+//   //   remote: true,
+//   //   gameId: 0,
+//   //   playerId: 0,
+//   // },
+// }
+// Framework(Drawing);

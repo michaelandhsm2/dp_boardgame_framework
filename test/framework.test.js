@@ -3,6 +3,7 @@ import CreateGameReducer from '../src/framework/reducer'
 import Board from '../src/framework/board'
 import Game from '../src/framework/game'
 import Flow from '../src/framework/flow'
+import Random from '../src/framework/random'
 
 describe('Basic Framework', () => {
 
@@ -155,6 +156,29 @@ describe('Advanced Framework', () => {
       },
     });
     expect(board.length).toEqual(1);
+  });
+
+  test('Random Testing', () => {
+    let flow = Flow.init({
+      game: Game({}),
+    });
+    let ctx = flow.getState().ctx;
+    expect(Random(ctx)).toEqual(168070);
+    expect(Random(ctx)).toEqual(677268843);
+    expect(Random(ctx)).toEqual(1194115201);
+    expect(Random(ctx)).toEqual(1259501992);
+    expect(Random(ctx)).toEqual(703671065);
+
+    flow = Flow.init({
+      game: Game({}),
+      seed: 103820004,
+    });
+    ctx = flow.getState().ctx;
+    expect(Random(ctx)).toEqual(1146085864);
+    expect(Random(ctx)).toEqual(1484286305);
+    expect(Random(ctx)).toEqual(1229884583);
+    expect(Random(ctx)).toEqual(1140084106);
+
   });
 
 });
