@@ -1,7 +1,4 @@
-import Reducer from './reducer'
-
 function Flow (game, reducer, boardUpdate) {
-  if(reducer === undefined) reducer = Reducer.setup(game);
   if(boardUpdate === undefined) boardUpdate = () => {};
 
   var _flow = {

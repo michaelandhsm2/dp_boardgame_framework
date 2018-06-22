@@ -113,28 +113,6 @@ describe('Basic Framework', () => {
 });
 
 describe('Advanced Framework', () => {
-  test('Singleplayer Setup', () => {
-    let board = Framework({});
-    expect(board.length).toEqual(1);
-  });
-
-  test('Multiplayer Setup', () => {
-    let board = Framework({
-      multiplayer: true,
-    });
-    expect(board.length).toEqual(2);
-  });
-
-  test('Server Setup', () => {
-    let board = Framework({
-      multiplayer: {
-        remote: true,
-        playerId: 1,
-      },
-    });
-    expect(board.length).toEqual(1);
-  });
-
   test('Random Testing', () => {
     Reducer.setup({game:Game({})});
     let flow = Flow(Game({}), Reducer);

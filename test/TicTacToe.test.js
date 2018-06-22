@@ -31,11 +31,9 @@ describe('Fundemental Tic Tac Toe Game', () => {
     expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
 
-    console.log(flow.getState())
-
     cells[1] = 1;
     flow.select(1);
-        console.log(flow.getState())
+    
     expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
 
