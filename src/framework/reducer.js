@@ -1,34 +1,45 @@
-function CreateGameReducer({game, numPlayers, multiplayer, ...args}){
+import Client from './client'
 
-  let options = game.init({...args});
+var Reducer = (function (){
 
-  let _state = {
-    // User managed state.
-    G: game.setup(options),
+  let _state, _game;
 
-    // Framework managed state.
-    ctx: {
-      numPlayers,
-      currentPlayer: 0,
-      playerOrder: [],
-      ...options,
-    },
-  };
+  function setup({game, numPlayers, multiplayer, ...args}){
 
-  for(let i = 0; i < numPlayers; i++){
-    _state.ctx.playerOrder.push(i);
+    let options = game.init({...args});
+
+    _game = game;
+
+    _state = {
+      G: game.setup(options),
+      ctx: {
+        numPlayers,
+        currentPlayer: 0,
+        playerOrder: [],
+        ...options,
+      },
+    }
+
+    for(let i = 0; i < numPlayers; i++){
+      _state.ctx.playerOrder.push(i);
+    }
+
+    if(multiplayer && multiplayer.remote){
+      Client.start(multiplayer.gameId, (state) => {
+        _state = state;
+      });
+    }
   }
-  
-  var _reducer = {
-    runCommand: (action, state = _state, ...args) => {
-      _state = game.process(action, state, ...args);
+
+  return {
+    setup: setup,
+    runCommand: (action, ...args) => {
+      _state = _game.process(action, _state, ...args);
+      Client.pushState(_state);
       return _state;
     },
     getState: () => (_state),
-    setState: (state) => (_state = state),
   };
+})();
 
-  return _reducer;
-}
-
-export default CreateGameReducer;
+export default Reducer;

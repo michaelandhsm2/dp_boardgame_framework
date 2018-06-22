@@ -2,18 +2,25 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 import config from '../../firebaseKey.json'
 
-var Client = {
-  start: function(flow, id){
-    firebase.initializeApp(config);
-    var ref = firebase.database().ref('games/' + id );
+var Client = (function() {
 
-    ref.on('value', function(snapshot) {
-      if(snapshot.val()) flow.action(snapshot.val());
-    });
+    var ref = {
+      set: () => {},
+    };
 
-    return ref;
-  },
+    return {
+      start: function(id, setState){
+        firebase.initializeApp(config);
+        ref = firebase.database().ref('games/' + id );
 
-}
+        ref.on('value', function(snapshot) {
+          if(snapshot.val()) setState(snapshot.val());
+        });
+      },
+      pushState: function(state){
+        ref.set(state);
+      }
+    };
+})();
 
 export default Client

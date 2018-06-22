@@ -30,6 +30,11 @@ function Game({init, setup, moves, flow, ...args}){
       let _state = JSON.parse(JSON.stringify(state));
       if(moves.hasOwnProperty(action)){
         _state.G = moves[action](state.G, state.ctx, ...args);
+
+        let gameOver = flow.endGameIf(_state.G, _state.ctx);
+        if(gameOver){
+          _state.ctx.gameover = gameOver;
+        }
       }else if(flow.hasOwnProperty(action)){
         _state = flow[action](state.G, state.ctx, ...args);
       }

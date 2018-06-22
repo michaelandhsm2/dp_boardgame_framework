@@ -1,5 +1,5 @@
 import Framework from '../src/framework/framework'
-import CreateGameReducer from '../src/framework/reducer'
+import Reducer from '../src/framework/reducer'
 import Board from '../src/framework/board'
 import Game from '../src/framework/game'
 import Flow from '../src/framework/flow'
@@ -34,27 +34,23 @@ describe('Basic Framework', () => {
   });
 
   test('Basic Setup', () => {
-    let reducer = CreateGameReducer({
+    Reducer.setup({
       game, numPlayers: 3
     });
-    let state = reducer.getState();
+    let state = Reducer.getState();
     expect(state.ctx.numPlayers).toEqual(3);
   });
 
   test('Basic Moves', () => {
-    let reducer = CreateGameReducer({
+    Reducer.setup({
       game, numPlayers: 3
     });
-    let state = reducer.getState();
+    let state = Reducer.getState();
     expect(state.G.num).toEqual(0);
 
     // Reducer w/out Given State
-    state = reducer.runCommand('count');
+    state = Reducer.runCommand('count');
     expect(state.G.num).toEqual(1);
-
-    // Reducer w/ Given State
-    state = reducer.runCommand('count', {...state, G: { num: 3}});
-    expect(state.G.num).toEqual(4);
   });
 
   test('Basic Moves w/ Board', () => {
@@ -108,29 +104,6 @@ describe('Basic Framework', () => {
 
     expect(flow.getState().ctx.num).toEqual(2);
     expect(flow.getState().G.num).toEqual(2);
-  });
-
-  test('Pass Action', () => {
-    let flow = Flow.init({
-      game,
-      numPlayers: 3,
-    });
-    expect(flow.getState().G.num).toEqual(0);
-    expect(flow.getState().ctx.currentPlayer).toEqual(0);
-
-    flow.action({
-      action: 'count',
-      state:{
-        G: {num: 3},
-        ctx: {
-          currentPlayer: 2,
-          playerOrder: [0,1,2],
-        },
-      },
-      args:[]
-    });
-    expect(flow.getState().G.num).toEqual(4);
-    expect(flow.getState().ctx.currentPlayer).toEqual(2);
   });
 
 });
