@@ -1,5 +1,7 @@
 # Design Pattern Term Project
 
+[Demo Powerpoint!!!](https://docs.google.com/presentation/d/1hO0xX2g7DRD1_d5cvvtyUAZxOeB22rcvPUNtISU1lgo/edit?usp=sharing)
+
 This is a ......
 To be written at a later date XD
 
