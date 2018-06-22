@@ -2,39 +2,30 @@ import Framework from './framework/framework';
 
 // import SimpleTicTacToeBoard from './SimpleTicTacToe/board';
 // import SimpleTicTacToeGame from './SimpleTicTacToe/game';
-// const TicTacToe_SimpleBoard = {
+//
+// Framework({
 //   board: SimpleTicTacToeBoard,
 //   game: SimpleTicTacToeGame,
-// };
-// Framework(TicTacToe_SimpleBoard);
+// });
 
 // import TicTacToeBoard from './TicTacToe/board';
 // import TicTacToeGame from './TicTacToe/game';
-// const TicTacToe_SingleBoard = {
+//
+// Framework({
 //   board: TicTacToeBoard,
 //   game: TicTacToeGame,
-//   boardSize: 4,
-//   // multiplayer: true,
-// };
-// Framework(TicTacToe_SingleBoard);
-
-// import TicTacToeBoard from './TicTacToe/board';
-// import TicTacToeGame from './TicTacToe/game';
-// const TicTacToe_MultiBoard = {
-//   board: TicTacToeBoard,
-//   game: TicTacToeGame,
-//   boardSize: 2,
-//   multiplayer:{
-//     remote: true,
-//     gameId: 0,
-//     playerId: 1,
-//   },
-// }
-// Framework(TicTacToe_MultiBoard);
+//   // boardSize: 4,
+//   // multiplayer:{
+//   //   gameId: 2,
+//   //   // remote: true,
+//   //   // playerId: 1,
+//   // },
+// });
 
 // import DrawingBoard from './Drawing/board';
 // import DrawingGame from './Drawing/game';
-// const Drawing = {
+//
+// Framework({
 //   board: DrawingBoard,
 //   game: DrawingGame,
 //   boardSize: 400,
@@ -43,5 +34,4 @@ import Framework from './framework/framework';
 //   //   gameId: 0,
 //   //   playerId: 0,
 //   // },
-// }
-// Framework(Drawing);
+// });

@@ -1,7 +1,7 @@
 import Board from '../src/framework/board';
 import Game from '../src/framework/game';
 import Flow from '../src/framework/flow';
-import CreateGameReducer from '../src/framework/reducer';
+import Reducer from '../src/framework/reducer';
 import TicTacToeGame from '../src/TicTacToe/game';
 
 const NULL = false;
@@ -13,10 +13,11 @@ describe('Fundemental Tic Tac Toe Game', () => {
   beforeAll(() => {
     cells = Array(9).fill(NULL);
 
-    flow = Flow.init({
+    Reducer.setup({
       game: TicTacToeGame,
       numPlayers: 2,
-    });
+    })
+    flow = Flow(TicTacToeGame, Reducer);
   });
 
   test('Basic Setup', () => {
@@ -30,8 +31,11 @@ describe('Fundemental Tic Tac Toe Game', () => {
     expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
 
+    console.log(flow.getState())
+
     cells[1] = 1;
     flow.select(1);
+        console.log(flow.getState())
     expect(flow.getState().G.cells).toEqual(cells);
     flow.endTurn();
 
@@ -57,10 +61,17 @@ describe('Fundemental Tic Tac Toe Game', () => {
 
 describe('Advanced Tic Tac Toe Game', () => {
 
+  let flow;
+
+  beforeAll(() => {
+    flow = Flow(TicTacToeGame, Reducer);
+  });
+
   test('Basic Draw', () => {
-    let flow = Flow.init({
+    Reducer.setup({
       game: TicTacToeGame,
-    });
+      numPlayers: 2,
+    })
 
     flow.select(4);
     flow.select(0);
@@ -78,19 +89,21 @@ describe('Advanced Tic Tac Toe Game', () => {
   });
 
   test('Diffrent Size Board', () => {
-    let flow = Flow.init({
+    Reducer.setup({
       game: TicTacToeGame,
+      numPlayers: 2,
       boardSize: 4,
-    });
+    })
 
     expect(flow.getState().G.cells).toEqual(Array(16).fill(NULL));
   });
 
   test('Diffrent Size Board Draw', () => {
-    let flow = Flow.init({
+    Reducer.setup({
       game: TicTacToeGame,
+      numPlayers: 2,
       boardSize: 4,
-    });
+    })
 
     expect(flow.getState().G.cells).toEqual(Array(16).fill(NULL));
 
@@ -116,10 +129,11 @@ describe('Advanced Tic Tac Toe Game', () => {
   });
 
   test('Diffrent Size Board Victory', () => {
-    let flow = Flow.init({
+    Reducer.setup({
       game: TicTacToeGame,
+      numPlayers: 2,
       boardSize: 2,
-    });
+    })
 
     expect(flow.getState().G.cells).toEqual(Array(4).fill(NULL));
     flow.select(0);

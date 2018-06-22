@@ -2,14 +2,16 @@ import Client from './client'
 
 var Reducer = (function (){
 
-  let _state, _game;
+  let _state, _game, _update;
 
-  function setup({game, numPlayers, multiplayer, ...args}){
+  function setup({game, numPlayers, multiplayer, update, ...args}){
+
+    if(update === undefined) update = () => {};
 
     let options = game.init({...args});
 
     _game = game;
-
+    _update = update;
     _state = {
       G: game.setup(options),
       ctx: {
@@ -27,6 +29,7 @@ var Reducer = (function (){
     if(multiplayer && multiplayer.remote){
       Client.start(multiplayer.gameId, (state) => {
         _state = state;
+        _update(state);
       });
     }
   }
@@ -36,6 +39,7 @@ var Reducer = (function (){
     runCommand: (action, ...args) => {
       _state = _game.process(action, _state, ...args);
       Client.pushState(_state);
+      _update(_state);
       return _state;
     },
     getState: () => (_state),

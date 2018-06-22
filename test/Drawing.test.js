@@ -2,7 +2,7 @@
 import Board from '../src/framework/board';
 import Game from '../src/framework/game';
 import Flow from '../src/framework/flow';
-import CreateGameReducer from '../src/framework/reducer';
+import Reducer from '../src/framework/reducer';
 import DrawingGame from '../src/Drawing/game';
 
 describe('Fundemental Drawing Game', () => {
@@ -12,10 +12,11 @@ describe('Fundemental Drawing Game', () => {
   beforeAll(() => {
     canvas = [];
 
-    flow = Flow.init({
+    Reducer.setup({
       game: DrawingGame,
       numPlayers: 2,
-    });
+    })
+    flow = Flow(DrawingGame, Reducer);
   });
 
   test('Basic Setup', () => {
@@ -34,7 +35,7 @@ describe('Fundemental Drawing Game', () => {
     });
     flow.draw(10,10,10,10);
     expect(flow.getState().G.canvas).toEqual(canvas);
-    
+
     flow.changeShape('circle');
     canvas.push({
       type: 'circle',
@@ -54,9 +55,8 @@ describe('Fundemental Drawing Game', () => {
   });
 
   test('Setup BoardSize', () => {
-    flow = Flow.init({
+    Reducer.setup({
       game: DrawingGame,
-      numPlayers: 2,
       boardSize: 100,
     });
     expect(flow.getState().ctx.boardSize).toEqual(100);

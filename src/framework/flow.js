@@ -1,34 +1,31 @@
 import Reducer from './reducer'
 
-var Flow = {
-  init: function({game, ...args}){
+function Flow (game, reducer, boardUpdate) {
+  if(reducer === undefined) reducer = Reducer.setup(game);
+  if(boardUpdate === undefined) boardUpdate = () => {};
 
-    Reducer.setup({
-      game,
-      ...args
-    });
+  var _flow = {
+    update: boardUpdate,
+    getState: reducer.getState,
+  }
 
-    for(let i in game.moves){
-      this[game.moves[i].name] = function(...args){
-        this.action(game.moves[i].name, ...args);
-      }
+  function action(action, ...args){
+    let state = reducer.runCommand(action, ...args);
+    boardUpdate(state);
+  }
+
+  for(let i in game.moves){
+    _flow[game.moves[i].name] = function(...args){
+      action(game.moves[i].name, ...args);
     }
-    for(let i in game.flow){
-      this[game.flow[i].name] = function(...args){
-        this.action(game.flow[i].name, ...args);
-      }
+  }
+  for(let i in game.flow){
+    _flow[game.flow[i].name] = function(...args){
+      action(game.flow[i].name, ...args);
     }
-    return this;
-  },
-  action: function(action, ...args){
-    let _state = Reducer.runCommand(action, ...args);
-    this.update(_state);
-  },
-  getState: function(){
-    return Reducer.getState();
-  },
-  update: function(_state){
-  },
+  }
+
+  return _flow;
 };
 
 export default Flow;
