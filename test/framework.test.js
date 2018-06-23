@@ -57,7 +57,7 @@ describe('Basic Framework', () => {
     Reducer.setup({
       game,
     })
-    let flow = Flow(game, Reducer);
+    let flow = Flow(game, Reducer.getState, Reducer.runCommand);
     expect(flow.getState().G.num).toEqual(0);
 
     flow.count();
@@ -71,7 +71,7 @@ describe('Basic Framework', () => {
       game,
       numPlayers: 3,
     })
-    let flow = Flow(game, Reducer);
+    let flow = Flow(game, Reducer.getState, Reducer.runCommand);
     expect(flow.getState().ctx.playerOrder).toEqual([0,1,2]);
     expect(flow.getState().ctx.currentPlayer).toEqual(0);
 
@@ -87,7 +87,7 @@ describe('Basic Framework', () => {
     Reducer.setup({
       game,
     })
-    let flow = Flow(game, Reducer);
+    let flow = Flow(game, Reducer.getState, Reducer.runCommand);
 
     flow.count();
     expect(flow.getState().G.num).toEqual(1);
@@ -104,7 +104,7 @@ describe('Basic Framework', () => {
       game,
       num: 2,
     })
-    let flow = Flow(game, Reducer);
+    let flow = Flow(game, Reducer.getState, Reducer.runCommand);
 
     expect(flow.getState().ctx.num).toEqual(2);
     expect(flow.getState().G.num).toEqual(2);
@@ -115,7 +115,7 @@ describe('Basic Framework', () => {
 describe('Advanced Framework', () => {
   test('Random Testing', () => {
     Reducer.setup({game:Game({})});
-    let flow = Flow(Game({}), Reducer);
+    let flow = Flow(Game({}), Reducer.getState, Reducer.runCommand);
 
     let ctx = flow.getState().ctx;
     expect(Random(ctx)).toEqual(168070);

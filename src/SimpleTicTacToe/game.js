@@ -1,12 +1,13 @@
 import Game from '../framework/game';
 
 let winCondition;
+const NULL = false;
 
 var TicTacToeGame = Game({
 
   setup: () => {
     return {
-      cells: Array(9).fill(null)
+      cells: Array(9).fill(NULL)
     };
   },
 
@@ -36,7 +37,7 @@ function isVictory(G){
 
   for(let i in winCondition){
     let cond = winCondition[i];
-    if(G.cells[cond[0]] !== null &&
+    if(G.cells[cond[0]] !== NULL &&
       G.cells[cond[0]] === G.cells[cond[1]] &&
       G.cells[cond[1]] === G.cells[cond[2]])
       return cond;
@@ -47,7 +48,7 @@ function isVictory(G){
 
 function isDraw(G){
   for(let i = 0; i < 9; i++){
-    if(G.cells[i] === null)
+    if(G.cells[i] === NULL)
       return false;
   }
   return true;

@@ -9,11 +9,16 @@ function Framework({board, game, numPlayers, multiplayer, ...args}){
   if (board === undefined) board = Board({});
   if (!numPlayers) numPlayers = 2;
 
-  Reducer.setup({ game, numPlayers, multiplayer, update: BoardFactory.update, ...args });
+  let update = BoardFactory.update;
+  let getState = Reducer.getState;
+  let runCommand = Reducer.runCommand;
 
-  let flow = Flow(game, Reducer, BoardFactory.update);
+  Reducer.setup({ game, numPlayers, multiplayer, update, ...args });
+
+  let flow = Flow(game, getState, runCommand, update);
   BoardFactory.setup({board, numPlayers, multiplayer, flow});
-  BoardFactory.update(Reducer.getState());
+
+  update(getState());
 }
 
 export default Framework;

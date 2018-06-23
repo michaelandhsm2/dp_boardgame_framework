@@ -1,6 +1,7 @@
 import Board from '../framework/board';
 
 const UNIT_WIDTH = 50;
+const NULL = false;
 
 var TicTacToeBoard = Board({
   onSetup: function(flow, id){
@@ -27,7 +28,7 @@ var TicTacToeBoard = Board({
               pos.x < (i+1) * UNIT_WIDTH &&
               pos.y > j * UNIT_WIDTH &&
               pos.y < (j+1) * UNIT_WIDTH &&
-              state.G.cells[i + j * 3] === null &&
+              state.G.cells[i + j * 3] === NULL &&
               state.ctx.gameover === undefined
             ){
               flow.select(i + j * 3);
@@ -58,7 +59,7 @@ var TicTacToeBoard = Board({
     for(let i = 0; i < 3; i++){
       for(let j = 0; j < 3; j++){
         this.cvs.strokeRect(i * UNIT_WIDTH, j * UNIT_WIDTH, UNIT_WIDTH, UNIT_WIDTH);
-        if(G.cells[i + j * 3] !== null){
+        if(G.cells[i + j * 3] !== NULL){
           let text = 'O';
           if(G.cells[i + j * 3 ] !== 0) text = 'X';
           this.cvs.fillText(text, i * UNIT_WIDTH + 5, (j+1) * UNIT_WIDTH - 5, UNIT_WIDTH);

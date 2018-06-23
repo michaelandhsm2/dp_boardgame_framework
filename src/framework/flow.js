@@ -1,13 +1,13 @@
-function Flow (game, reducer, boardUpdate) {
+function Flow (game, getState, runCommand, boardUpdate) {
   if(boardUpdate === undefined) boardUpdate = () => {};
 
   var _flow = {
     update: boardUpdate,
-    getState: reducer.getState,
+    getState,
   }
 
   function action(action, ...args){
-    let state = reducer.runCommand(action, ...args);
+    let state = runCommand(action, ...args);
     boardUpdate(state);
   }
 
