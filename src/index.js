@@ -51,3 +51,17 @@ import Framework from './framework/framework';
 //
 // Demo 5 - Counting Game
 //
+
+// import GuesserBoard from './Guessing/board_guesser';
+// import SetterBoard from './Guessing/board_setter';
+// import GuessingGame from './Guessing/game';
+//
+// Framework({
+//   board: GuesserBoard,
+//   game: GuessingGame,
+//   multiplayer:{
+//     remote: true,
+//     gameId: 2,
+//     playerId: 0,
+//   },
+// });
