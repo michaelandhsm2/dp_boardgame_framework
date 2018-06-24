@@ -19,7 +19,10 @@ describe('Fundemental Drawing Game', () => {
       game: GuessingGame,
       numPlayers: 2,
     })
-    flow = Flow(GuessingGame, Reducer.getState, Reducer.runCommand);
+    flow = Flow(GuessingGame, {
+      runCommand: Reducer.runCommand,
+      getState: Reducer.getState,
+    });
   });
 
   test('Basic Setup', () => {

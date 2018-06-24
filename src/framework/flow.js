@@ -1,9 +1,8 @@
-function Flow (game, getState, runCommand, boardUpdate) {
+function Flow (game, {runCommand, boardUpdate, ..._args}) {
   if(boardUpdate === undefined) boardUpdate = () => {};
 
   var _flow = {
-    update: boardUpdate,
-    getState,
+    ..._args
   }
 
   function action(action, ...args){

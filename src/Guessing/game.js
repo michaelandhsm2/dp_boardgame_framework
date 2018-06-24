@@ -26,9 +26,9 @@ var _Game = Game({
         if(num === G.num){
           guesses.min = num;
           guesses.max = num;
-        }else if(guesses.min === false || (num < G.num && num > guesses.min)){
+        }else if(num < G.num && (guesses.min === false || num > guesses.min)){
           guesses.min = num;
-        }else if(guesses.max === false || (num > G.num && num < guesses.max)){
+        }else if(num > G.num && (guesses.max === false || num < guesses.max)){
           guesses.max = num;
         }
       }

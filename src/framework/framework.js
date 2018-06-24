@@ -15,7 +15,7 @@ function Framework({board, game, numPlayers, multiplayer, ...args}){
 
   Reducer.setup({ game, numPlayers, multiplayer, update, ...args });
 
-  let flow = Flow(game, getState, runCommand, update);
+  let flow = Flow(game, {getState, runCommand, update});
   BoardFactory.setup({board, numPlayers, multiplayer, flow});
 
   update(getState());

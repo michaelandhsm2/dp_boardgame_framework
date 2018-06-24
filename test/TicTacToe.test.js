@@ -17,7 +17,10 @@ describe('Fundemental Tic Tac Toe Game', () => {
       game: TicTacToeGame,
       numPlayers: 2,
     })
-    flow = Flow(TicTacToeGame, Reducer.getState, Reducer.runCommand);
+    flow = Flow(TicTacToeGame, {
+      runCommand: Reducer.runCommand,
+      getState: Reducer.getState,
+    });
   });
 
   test('Basic Setup', () => {
@@ -62,7 +65,10 @@ describe('Advanced Tic Tac Toe Game', () => {
   let flow;
 
   beforeAll(() => {
-    flow = Flow(TicTacToeGame, Reducer.getState, Reducer.runCommand);
+    flow = Flow(TicTacToeGame, {
+      runCommand: Reducer.runCommand,
+      getState: Reducer.getState,
+    });
   });
 
   test('Basic Draw', () => {
