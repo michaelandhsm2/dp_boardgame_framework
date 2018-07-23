@@ -1,16 +1,14 @@
 # Design Pattern Term Project
 
-[Demo Powerpoint!!!](https://docs.google.com/presentation/d/1hO0xX2g7DRD1_d5cvvtyUAZxOeB22rcvPUNtISU1lgo/edit?usp=sharing)
-
 This is the term project for the [Design Pattern Course](https://myweb.ntut.edu.tw/~yccheng/dp2018s/DP.html) in National Taipei University of Technology (NTUT). The project is a framework that allows users to __quickly scaffold__ turn-based board games by specifying the *__game mechanics__* and the *__board representation__*.
 
 The project is inspired by [Schuchert’s Monopoly Kata](https://schuchert.wikispaces.com/Monopoly%28r%29) and Google's [boardgame.io](https://github.com/google/boardgame.io).
 
 ## Problem Statement
 
-Create a framework that allows users to quickly scaffold turn-based board games
-by specifying the game mechanics
-and the board representation.
+Create a framework that allows users to quickly scaffold turn-based board games by specifying the game mechanics and the board representation.
+
+[Powerpoint Presentation for Class](https://docs.google.com/presentation/d/1hO0xX2g7DRD1_d5cvvtyUAZxOeB22rcvPUNtISU1lgo/edit?usp=sharing)
 
 ## Design Problems
 
