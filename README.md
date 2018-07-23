@@ -2,44 +2,46 @@
 
 [Demo Powerpoint!!!](https://docs.google.com/presentation/d/1hO0xX2g7DRD1_d5cvvtyUAZxOeB22rcvPUNtISU1lgo/edit?usp=sharing)
 
-This is a ......
-To be written at a later date XD
+This is the term project for the [Design Pattern Course](https://myweb.ntut.edu.tw/~yccheng/dp2018s/DP.html) in National Taipei University of Technology (NTUT). The project is a framework that allows users to __quickly scaffold__ turn-based board games by specifying the *__game mechanics__* and the *__board representation__*.
 
-The project is inspired by [Schuchert’s Monopoly Kata](https://schuchert.wikispaces.com/Monopoly%28r%29).
+The project is inspired by [Schuchert’s Monopoly Kata](https://schuchert.wikispaces.com/Monopoly%28r%29) and Google's [boardgame.io](https://github.com/google/boardgame.io).
 
 ## Problem Statement
 
-Monopoly is a board game where players roll two six-sided dice to move around the game board, buying and trading properties, and develop them with houses and hotels. Players collect rent from their opponents, with the goal being to drive them into bankruptcy. Money can also be gained or lost through Chance and Community Chest cards, and tax squares; players can end up in jail, which they cannot move from until they have met one of several conditions.
+Create a framework that allows users to quickly scaffold turn-based board games
+by specifying the game mechanics
+and the board representation.
 
-Implement the game with a Test-Driven Approach. With the roll of the dice, users should be able to see the graphic interface implement his/her turn by updating the money, position, and status of the player. A simpler version of the rules may be used to decrease the size of the project.
+## Design Problems
 
+- The game mechanics should be independent of the board representation, while the board representation relies on the game mechanics.
+- The framework itself should manage game order and state.
+- The framework itself should provide multiplayer connectivity.
+- The framework should aim to create ease for dynamic customization.
 
-## Initial Plan & Goals
+## Usage Sample ([Sample Code](https://github.com/michaelandhsm2/dp_boardgame_framework/blob/master/src/index.js))
 
-### Iteration 1
-* Simple Graphic Interface Implemented
-* Turn/Phase State System
-* Basic Player Movement
-* Taxes, Income, and Simplified Jail
+### 1. Simple Tic Tac Toe
+Local 2 player games.
 
-### Iteration 2
-* Allow Buying Properties
-* Implementing Selected Community Chest and Chance Cards
-* Jail Implementation
+![Pic](https://raw.githubusercontent.com/michaelandhsm2/dp_boardgame_framework/master/assets/task1.png)
 
-### Optional
-* Selecting Game Boards (with its own Chest and Chance sets)
-* Allow Mortgages
-* Implementing All Community Chest and Chance Cards
+### 2. Drawing Game
+Allows online connectivity and master-slave controls.
+![Pic](https://raw.githubusercontent.com/michaelandhsm2/dp_boardgame_framework/master/assets/task4.png)
+
+### 3. Guessing Game
+Switching between different presentation by switching the game board.
+
+![Pic](https://raw.githubusercontent.com/michaelandhsm2/dp_boardgame_framework/master/assets/task5a.png)
+
+![Pic](https://raw.githubusercontent.com/michaelandhsm2/dp_boardgame_framework/master/assets/task5b.png)
 
 
 ## Built With
 
 * NodeJS
-* Boardgame.io
 
 ## Authors
 
 * **Michael Fu** - *System Design and Code Implementation* - [michaelandhsm2](https://github.com/michaelandhsm2)
-
-## Acknowledgments
